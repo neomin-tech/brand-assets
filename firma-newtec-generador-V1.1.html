@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generador de Firma &middot; Newtec Chile</title>
+<style>
+:root{--navy:#083861;--ink:#1B1A17;--soft:#5A574F;--line:#D8DCE3;--paper:#F2F4F7;--card:#fff;--sel:#E3EAF3}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;padding:26px 16px 70px}
+.wrap{max-width:1060px;margin:0 auto}
+.head{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.head img{height:32px;width:auto}
+.head h1{font-size:21px;font-weight:700;letter-spacing:-.01em}
+.by{font-size:12px;color:var(--soft);letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+.lead{color:var(--soft);font-size:14px;margin:4px 0 22px;line-height:1.5;max-width:640px}
+.grid{display:grid;grid-template-columns:360px 1fr;gap:22px;align-items:start}
+@media(max-width:840px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 1px 2px rgba(0,0,0,.04),0 14px 40px -18px rgba(8,56,97,.15)}
+.pad{padding:20px}
+.card h2{font-size:15px;font-weight:700;margin-bottom:2px}
+.hint{font-size:12px;color:var(--soft);margin-bottom:15px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--ink);margin-bottom:5px}
+.field input{width:100%;border:1px solid var(--line);background:#F8F9FC;border-radius:10px;padding:11px 12px;font-family:inherit;font-size:14px;color:var(--ink);transition:.15s}
+.field input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px var(--sel)}
+.field input::placeholder{color:#A8B0BC}
+.fixed{font-size:12px;color:var(--soft);background:#EEF1F6;border:1px dashed var(--line);border-radius:9px;padding:9px 11px;line-height:1.4}
+.fixed b{color:var(--ink)}
+.sep{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--soft);font-weight:600;margin:18px 0 10px;padding-top:14px;border-top:1px dashed var(--line)}
+.lang-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.lang-row span{font-size:13px;color:var(--soft)}
+.langtog{display:flex;gap:6px}
+.ltab{border:1.5px solid var(--line);background:#F8F9FC;border-radius:8px;padding:7px 18px;font-size:13px;font-weight:700;cursor:pointer;color:var(--soft);transition:.15s;letter-spacing:.04em}
+.ltab:hover{border-color:#A8B0BC;color:var(--ink)}
+.ltab.active{border-color:var(--navy);background:var(--sel);color:var(--navy)}
+.disc-preview{font-size:11px;color:#9a978f;background:#F8F9FC;border:1px solid var(--line);border-radius:8px;padding:8px 10px;line-height:1.45;font-style:italic}
+.preview-head{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;border-bottom:1px solid var(--line)}
+.preview-head h2{font-size:15px;font-weight:700}
+.stage{padding:26px 22px;background:repeating-linear-gradient(45deg,#f4f6f9,#f4f6f9 10px,#eceff4 10px,#eceff4 20px)}
+.mail{background:#fff;border:1px solid var(--line);border-radius:11px;box-shadow:0 8px 26px -14px rgba(8,56,97,.18);overflow:hidden}
+.mailbar{background:#F8F9FC;border-bottom:1px solid var(--line);padding:9px 15px;font-size:11.5px;color:var(--soft)}
+.mailbody{padding:20px 22px;font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222;overflow-x:auto}
+.greet{color:#555;margin-bottom:16px;line-height:1.5}
+.actions{padding:15px 20px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{border:0;font-family:inherit;font-weight:700;font-size:14px;border-radius:10px;padding:12px 20px;cursor:pointer;transition:.15s}
+.btn.primary{background:var(--navy);color:#fff}.btn.primary:hover{background:#062d50}
+.btn.ok{background:#062d50;color:#fff}
+.cmsg{font-size:12.5px;color:var(--soft)}
+.platwrap{padding:18px 20px;border-top:1px solid var(--line)}
+.platwrap .t{font-size:13px;font-weight:700;margin-bottom:10px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.tab{border:1.5px solid var(--line);background:#F8F9FC;border-radius:10px;padding:9px 13px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--ink);transition:.15s}
+.tab:hover{border-color:#A8B0BC}
+.tab.active{border-color:var(--navy);background:var(--sel);color:var(--navy)}
+.steps{font-size:13px;color:var(--ink);line-height:1.6}
+.steps ol{margin:0;padding-left:20px}
+.steps li{margin-bottom:7px}
+.steps b{color:var(--navy)}
+.tip{background:#FFF7E6;border:1px solid #F0DFB3;color:#7a5a16;font-size:12px;border-radius:9px;padding:9px 11px;margin-top:10px;line-height:1.45}
+.tip.blue{background:#E8F4FF;border-color:#B3D4EF;color:#1a4a6b}
+.foot{text-align:center;color:var(--soft);font-size:12px;margin-top:26px;line-height:1.6}
+</style></head>
+<body><div class="wrap">
+ <div class="head"><img id="hlogo" alt="Newtec Chile" style="height:32px;width:auto;"><div><div class="by">Newtec Chile SpA</div><h1>Generador de firma de correo</h1></div></div>
+ <p class="lead">Llena tus datos, mira la vista previa, elige tu app y sigue los pasos. El logo, la empresa y el aviso legal vienen fijos.</p>
+ <div class="grid">
+  <div class="card pad">
+   <h2>Tus datos</h2><p class="hint">Solo lo que escribas aparece en la firma.</p>
+   <div class="field"><label>Nombre completo</label><input id="nombre" placeholder="Ej: María González"></div>
+   <div class="field"><label>Cargo</label><input id="cargo" placeholder="Ej: Operations Manager"></div>
+   <div class="field"><label>Teléfono</label><input id="telefono" placeholder="+56 9 1234 5678"></div>
+   <div class="field"><label>Email</label><input id="email" placeholder="nombre@newtecchile.com"></div>
+   <div class="field"><label>Dirección</label><input id="direccion"></div>
+   <div class="sep">Aviso de confidencialidad</div>
+   <div class="lang-row"><span>Idioma:</span><div class="langtog" id="langtog"><div class="ltab active" data-l="en">EN</div><div class="ltab" data-l="es">ES</div></div></div>
+   <div class="disc-preview" id="disc-preview"></div>
+   <div class="sep"></div>
+   <div class="fixed">Fijos: <b>logo</b>, <b>Newtec Chile SpA</b> y <b>aviso de confidencialidad</b>.</div>
+  </div>
+  <div class="card">
+   <div class="preview-head"><h2>Vista previa</h2><span class="cmsg" id="savemsg"></span></div>
+   <div class="stage"><div class="mail">
+    <div class="mailbar">Para: &nbsp;&middot;&nbsp; Asunto: Seguimiento</div>
+    <div class="mailbody"><div class="greet">Estimado,<br>Quedo atento a sus comentarios.<br>Saludos,</div><div id="sig"></div></div>
+   </div></div>
+   <div class="actions"><button class="btn primary" id="copy">&#128203; Copiar firma</button><span class="cmsg" id="copymsg"></span></div>
+   <div class="platwrap">
+    <div class="t">&iquest;C&oacute;mo la instalo? Elige tu app:</div>
+    <div class="tabs">
+     <div class="tab active" data-p="apple-desktop">Apple Mail &middot; Mac</div>
+     <div class="tab" data-p="apple-mobile">Apple Mail &middot; iPhone</div>
+     <div class="tab" data-p="outlook-desktop">Outlook &middot; Escritorio</div>
+     <div class="tab" data-p="outlook-mobile">Outlook &middot; M&oacute;vil/Web</div>
+    </div>
+    <div class="steps" id="steps"></div>
+   </div>
+  </div>
+ </div>
+ <p class="foot">Im&aacute;genes hosteadas en github.com/neomin-tech/newtec-brand-assets &mdash; funciona en todos los dispositivos igual que WiseStamp.</p>
+</div>
+<script>
+const LOGO  = "https://raw.githubusercontent.com/neomin-tech/newtec-brand-assets/main/newtec-logo.png";
+const PHONEI= "https://raw.githubusercontent.com/neomin-tech/newtec-brand-assets/main/newtec-phone.png";
+const EMAILI= "https://raw.githubusercontent.com/neomin-tech/newtec-brand-assets/main/newtec-email.png";
+const LOCI  = "https://raw.githubusercontent.com/neomin-tech/newtec-brand-assets/main/newtec-location.png";
+const NAVY  = "#083861", FONT = "Arial, Helvetica, sans-serif", COMPANY = "Newtec Chile SpA";
+const DISC  = { en: "IMPORTANT: The contents of this email and any attachments are confidential. They are intended for the named recipient(s) only. If you have received this email by mistake, please notify the sender immediately and do not disclose the contents to anyone or make copies thereof.", es: "IMPORTANTE: El contenido de este correo electrónico y cualquier archivo adjunto son confidenciales. Están destinados únicamente al/los destinatario/s mencionado/s. Si ha recibido este correo por error, notifique al remitente de inmediato y no divulgue su contenido ni realice copias del mismo." };
+const INSTR = {
+  "apple-desktop": `<ol>
+ <li>Pulsa <b>Copiar firma</b> arriba.</li>
+ <li>Abre <b>Mail</b> en tu Mac &rarr; men&uacute; <b>Mail &rarr; Ajustes</b> (o <b>Preferencias</b>) &rarr; pesta&ntilde;a <b>Firmas</b>.</li>
+ <li>Columna izquierda: elige tu cuenta (@newtecchile.com).</li>
+ <li>Pulsa <b>+</b> para crear una firma nueva.</li>
+ <li><b>Clave:</b> abajo, <b>desmarca</b> &ldquo;Usar siempre el tipo de letra de mis mensajes predeterminado&rdquo;.</li>
+ <li>Haz clic en el recuadro de la derecha y pega con <b>Cmd + V</b>.</li>
+ <li>Cierra. Listo.</li>
+</ol><div class="tip">Si se pega sin formato: desmarca la casilla del paso 5 y pega de nuevo.</div>`,
+  "apple-mobile": `<ol>
+ <li>Pulsa <b>Copiar firma</b> en esta p&aacute;gina desde Safari en el iPhone.</li>
+ <li>Abre <b>Ajustes</b> &rarr; <b>Apps &rarr; Mail</b> (iOS&nbsp;17 o anterior: <b>Ajustes &rarr; Mail</b>) &rarr; <b>Firma</b>.</li>
+ <li>Borra lo que haya, toca dentro y <b>pega</b>.</li>
+ <li>Si se peg&oacute; como texto plano: <b>agita el iPhone</b> &rarr; toca <b>Deshacer</b>. El formato y el logo vuelven.</li>
+ <li>Sal de Ajustes. Listo.</li>
+</ol><div class="tip">Las im&aacute;genes est&aacute;n hosteadas en GitHub igual que WiseStamp, por eso funciona en iOS sin trucos extra.</div>`,
+  "outlook-desktop": `<ol>
+ <li>Pulsa <b>Copiar firma</b>.</li>
+ <li><b>Nuevo Outlook:</b> engranaje &rarr; <b>Correo &rarr; Redactar y responder &rarr; Firma de correo</b> &rarr; pega &rarr; <b>Guarda</b>.</li>
+ <li><b>Outlook cl&aacute;sico (Windows):</b> <b>Archivo &rarr; Opciones &rarr; Correo &rarr; Firmas&hellip; &rarr; Nueva</b> &rarr; pega (Ctrl&nbsp;+&nbsp;V) &rarr; guarda.</li>
+ <li>Marca como predeterminada para <b>mensajes nuevos</b> y <b>respuestas</b>.</li>
+</ol>`,
+  "outlook-mobile": `<ol>
+ <li>Pulsa <b>Copiar firma</b>.</li>
+ <li>Desde el navegador del tel&eacute;fono, abre <b>outlook.office.com</b> e inicia sesi&oacute;n.</li>
+ <li>Engranaje &rarr; <b>Correo &rarr; Redactar y responder &rarr; Firma de correo</b> &rarr; pega &rarr; <b>Guarda</b>.</li>
+ <li>La app Outlook del tel&eacute;fono sincroniza la firma autom&aacute;ticamente.</li>
+</ol><div class="tip blue">La opci&oacute;n m&aacute;s simple para m&oacute;vil. Configuras una vez en la web y queda en todos tus dispositivos.</div>`
+};
+const DEFAULT_ADDR = "Agustín del Castillo 2887, Vitacura. RM, Chile.";
+
+document.getElementById('hlogo').src = LOGO;
+const $ = id => document.getElementById(id);
+const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+let lang = 'en';
+
+function buildSig(d) {
+  const cargoLine = [d.cargo, COMPANY].filter(Boolean).map(esc).join(', ');
+  const tel = (d.telefono||'').replace(/[^+\d]/g,'');
+  const peCells = [];
+  if(d.telefono) peCells.push(`<td valign="middle" style="padding:2px 22px 2px 0;"><table cellpadding="0" cellspacing="0" border="0"><tr><td valign="middle" style="padding-right:7px;"><img src="${PHONEI}" width="16" height="16" alt="" style="display:inline-block;vertical-align:middle;border:0;"></td><td valign="middle" style="font-family:${FONT};font-size:13px;"><a href="tel:${esc(tel)}" style="color:${NAVY};text-decoration:underline;">${esc(d.telefono)}</a></td></tr></table></td>`);
+  if(d.email)    peCells.push(`<td valign="middle" style="padding:2px 0;"><table cellpadding="0" cellspacing="0" border="0"><tr><td valign="middle" style="padding-right:7px;"><img src="${EMAILI}" width="16" height="16" alt="" style="display:inline-block;vertical-align:middle;border:0;"></td><td valign="middle" style="font-family:${FONT};font-size:13px;"><a href="mailto:${esc(d.email)}" style="color:${NAVY};text-decoration:underline;">${esc(d.email)}</a></td></tr></table></td>`);
+  const pe   = peCells.length ? `<tr><td><table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr>${peCells.join('')}</tr></table></td></tr>` : '';
+  const addr = d.direccion ? `<tr><td style="padding-top:5px;"><table cellpadding="0" cellspacing="0" border="0"><tr><td valign="middle" style="padding-right:7px;"><img src="${LOCI}" width="16" height="16" alt="" style="display:inline-block;vertical-align:middle;border:0;"></td><td valign="middle" style="font-family:${FONT};font-size:13px;"><a href="https://maps.google.com/?q=${encodeURIComponent(d.direccion)}" style="color:${NAVY};text-decoration:underline;">${esc(d.direccion)}</a></td></tr></table></td></tr>` : '';
+  const spacer = (pe||addr) ? '<tr><td style="height:12px;line-height:12px;font-size:12px;">&nbsp;</td></tr>' : '';
+  const disc = esc(DISC[lang]);
+  return `<table cellpadding="0" cellspacing="0" border="0" width="480" style="width:480px;border-collapse:collapse;font-family:${FONT};table-layout:fixed;">
+<tr>
+ <td valign="middle" width="150" style="width:150px;text-align:center;">
+   <img src="${LOGO}" width="110" height="68" alt="Newtec Chile" style="display:block;width:110px;height:68px;border:0;margin:0 auto;">
+ </td>
+ <td width="2" style="width:2px;background-color:#C8D0DA;font-size:1px;line-height:1px;">&nbsp;</td>
+ <td valign="top" style="padding-left:20px;">
+  <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+   <tr><td style="font-family:${FONT};font-size:18px;font-weight:bold;color:${NAVY};line-height:1.2;">${esc(d.nombre)||'Nombre Apellido'}</td></tr>
+   <tr><td style="font-family:${FONT};font-size:13.5px;color:#555555;line-height:1.45;padding-top:3px;">${cargoLine}</td></tr>
+   ${spacer}${pe}${addr}
+  </table>
+ </td>
+</tr>
+<tr><td colspan="3" style="padding-top:14px;"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;"><tr><td style="border-top:1px solid #2b2b2b;font-size:0;line-height:0;height:1px;">&nbsp;</td></tr></table></td></tr>
+<tr><td colspan="3" style="padding-top:10px;font-family:${FONT};font-size:11px;color:#9a978f;line-height:1.5;">${disc}</td></tr>
+</table>`;
+}
+
+function data() { return { nombre:$('nombre').value.trim(), cargo:$('cargo').value.trim(), telefono:$('telefono').value.trim(), email:$('email').value.trim(), direccion:$('direccion').value.trim() }; }
+function render() { $('sig').innerHTML=buildSig(data()); $('disc-preview').textContent=DISC[lang]; save(); }
+function save() {
+  try { localStorage.setItem('newtec_sig', JSON.stringify({...data(), lang}));
+    $('savemsg').textContent='Guardado \u2713';
+    setTimeout(()=>{ if($('savemsg').textContent==='Guardado \u2713') $('savemsg').textContent=''; },1300);
+  } catch(e) {}
+}
+function load() {
+  let d=null; try { d=JSON.parse(localStorage.getItem('newtec_sig')||'null'); } catch(e) {}
+  if(d) { ['nombre','cargo','telefono','email','direccion'].forEach(k=>{ if(d[k]) $(k).value=d[k]; }); if(d.lang) setLang(d.lang,false); }
+  if(!$('direccion').value) $('direccion').value=DEFAULT_ADDR;
+  render();
+}
+function setLang(l,rr=true) { lang=l; document.querySelectorAll('.ltab').forEach(t=>t.classList.toggle('active',t.dataset.l===l)); if(rr) render(); }
+document.getElementById('langtog').addEventListener('click',e=>{ const t=e.target.closest('.ltab'); if(t) setLang(t.dataset.l); });
+async function copySignature() {
+  const html=$('sig').innerHTML, b=$('copy');
+  const ok=()=>{ b.textContent='\u2713 \u00a1Copiada!'; b.classList.add('ok'); $('copymsg').textContent='Ahora pega en tu app de correo.'; setTimeout(()=>{ b.innerHTML='&#128203; Copiar firma'; b.classList.remove('ok'); },2400); };
+  const fail=()=>{ $('copymsg').textContent='Mant\u00e9n presionada la firma \u2192 Seleccionar todo \u2192 Copiar.'; };
+  try { await navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'})})]); ok(); return; } catch(e) {}
+  try { const r=document.createRange(); r.selectNode($('sig')); const s=window.getSelection(); s.removeAllRanges(); s.addRange(r); if(document.execCommand('copy')){ s.removeAllRanges(); ok(); return; } s.removeAllRanges(); } catch(e) {}
+  fail();
+}
+$('copy').addEventListener('click', copySignature);
+['nombre','cargo','telefono','email','direccion'].forEach(k=>$(k).addEventListener('input',render));
+function showSteps(p) { $('steps').innerHTML=INSTR[p]; document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.p===p)); }
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>showSteps(t.dataset.p)));
+load(); showSteps('apple-desktop');
+</script></body></html>
